@@ -1,0 +1,107 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta http-equiv="content-type" content="text/html; charset=utf-8" /> 
+<title> Gráfico de Barras </title> 
+<!-- Inclusões das bibliotecas JavaScript para o Highcharts--> 
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script> 
+<script src="http://code.highcharts.com/highcharts.js"></script> 
+</head> 
+<body> 
+<body> 
+
+<div id="container" style="width:100%; height:400px;">
+
+<script> 
+
+
+$(function () { 
+$('#container').highcharts({
+chart: {
+	type: 'column'
+},
+title:	{
+	text: 'Bilheteria dos Filmes'
+},
+xAxis:	{
+	categories: ['Worldwide', 'Domestic', 'Brazil', 'Argentina']
+},
+yAxis:	{
+	title:	{
+		text: 'Bilheterias'
+	}
+},
+series:	[{
+	name: 'Shrek 2',
+	data: [919838758, 441226247, 9457271, 6755894]
+},{
+	name: 'The Simpsons Movie',
+	data: [527071022, 183135014, 8886242, 7562798]
+},{
+	name: 'Despicable Me 2',
+	data: [970761885, 368061265, 35538035, 18552388]
+},{
+	name: 'Marvels The Avengers',
+	data: [1519557910, 623357910, 63904807, 17331732]
+},{
+	name: 'The Jungle Book',
+	data: [936152209, 360252209, 10823625, 9476772]
+}]
+
+
+}); 
+});
+
+</script>
+
+</div>
+
+<div id="container2" style="width:100%; height:400px;">
+
+<script> 
+
+
+$(function () { 
+$('#container2').highcharts({
+chart: {
+	type: 'line'
+},
+title:	{
+	text: 'Arrecadação nas Bilheterias na Semana de Estreia'
+},
+xAxis:	{
+	categories: ['Sexta', 'Sábado', 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta'] 
+},
+yAxis:	{
+	title:	{
+		text: 'Valor arrecadado (US$) corrigido pela inflação' 
+	}
+},
+series:	[{
+	name: 'Shrek 2',
+	data: [11786415,9158767,28340295,44797042,34900541,11512320,8023299]
+},{
+	name: 'The Simpsons Movie',
+	data: [30758269, 23799369, 19479149, 9277515, 7501425, 6406944]
+},{
+	name: 'Despicable Me 2',
+	data: [35010665, 24546980, 30477125, 29377950, 23662240, 10512110, 12070940]
+},{
+	name: 'Marvels The Avengers',
+	data: [80813985, 69557990, 57066733, 18898999, 17677190, 13612910]
+},{
+	name: 'The Jungle Book',
+	data: [32013316, 40811977, 30436171, 7023511, 8958687, 5850752, 5580012]
+}]
+
+}); 
+});
+
+
+</script>
+
+</div>
+
+</body>
+</body> 
+</html>

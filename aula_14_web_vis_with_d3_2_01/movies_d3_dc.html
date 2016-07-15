@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Aula 14</title>
+    <link rel="stylesheet" href="css/dc.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/crossfilter.js" charset="utf-8"></script>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="js/dc.js" charset="utf-8"></script>
+
+</head>
+<body>
+
+    <div>
+    <span class="container">
+        <div> </div>
+        <div id="chart"></div>
+    </span>
+    <span class="container">
+        <div> </div>
+        <div id="chart2"></div>
+    </span>
+    </div>
+
+	<script type="text/javascript">
+        var barChart = dc.barChart('#chart');
+        var barChart2 = dc.barChart('#chart2');
+
+		d3.json("movies.json", function(data){
+			// formatando nossos dados
+            data.forEach(function(d){
+                d.film = d.Film;
+                d.year = d.Year;
+                d.genre = d.Genre;
+                d.gross = +d.Worldwide_Gross_M;
+            });
+
+            //criando um crossfilter
+            var facts = crossfilter(data);
+
+            var yearDim = facts.dimension(function(d){
+                return d.year;
+            });
+
+            var genreDim = facts.dimension(function(d){
+                return d.genre;
+            });
+
+            var movieByGenreGroup = genreDim.group().reduceSum(function(d){
+                return d.gross;
+            });
+
+            var movieByYearGroup = yearDim.group().reduceSum(function(d){
+                return d.gross;
+            });
+
+            barChart.width(800)
+                .height(400)
+                .margins({top: 30, right: 50, bottom: 25, left: 40})
+                .dimension(yearDim)
+                .x(d3.scale.ordinal().domain(data.map(function (d) {return d.year;}).sort()))
+                .xUnits(dc.units.ordinal)
+                .renderHorizontalGridLines(true)
+                .legend(dc.legend().x(650).y(10).itemHeight(13).gap(5))
+                .brushOn(false)
+                .group(movieByYearGroup, 'Revenues per Year')
+                .elasticY(true)
+                .ordinalColors(['steelblue']);
+
+
+            barChart2.width(800)
+                .height(400)
+                .margins({top: 30, right: 50, bottom: 25, left: 40})
+                .dimension(genreDim)
+                .x(d3.scale.ordinal().domain(data.map(function (d) {return d.genre;}).sort()))
+                .xUnits(dc.units.ordinal)
+                .renderHorizontalGridLines(true)
+                .legend(dc.legend().x(650).y(10).itemHeight(13).gap(5))
+                .brushOn(false)
+                .group(movieByGenreGroup, 'Revenues per Gear')
+                .elasticY(true)
+                .ordinalColors(['darkorange']);
+
+            dc.renderAll();
+
+		});
+	</script>			
+</body>
+</html>

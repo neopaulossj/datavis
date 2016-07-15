@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Highcharts - Exemplo </title>
+        <!-- 1. Add these JavaScript inclusions in the head of your page -->
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="http://code.highcharts.com/modules/data.js"></script>
+        
+        <!-- 2. Add the JavaScript to initialize the chart on document ready -->
+        <script language="JavaScript">
+                    $(document).ready(function() {
+            /*
+             Load the data from the CSV file. This is the contents of the file:
+             
+                Apples,Pears,Oranges,Bananas,Plums
+                John,8,4,6,5
+                Jane,3,4,2,3
+                Joe,86,76,79,77
+                Janet,3,16,13,15
+                
+             */ 
+            $.get('googl.csv', function(csv) {
+                $('#container').highcharts({
+                    chart: {
+                          zoomType: 'x',
+                          type: 'area'
+                    }, 
+                    data: {
+                        csv: csv
+                    },
+                    title: {
+                        text: 'Valor do papel da GOOGL na Bolsa de Valores (NASDAQ)'
+                    },
+                    subtitle: {
+                        text: 'Fonte: Google Finance Historical Data'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Valores Diários'
+                        }
+                    },
+                    legend: {
+                        text: 'CLOSE'
+                    },
+                    plotOptions: {
+                          area: {
+                             fillColor: {
+                                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
+                                stops: [
+                                   [0, Highcharts.getOptions().colors[0]],
+                                   [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                                ]
+                             },
+                             marker: {
+                                radius: 2
+                             },
+                             lineWidth: 1,
+                             states: {
+                                hover: {
+                                   lineWidth: 1
+                                }
+                             },
+                             threshold: null
+                          }
+                       }
+
+                });
+            });
+            
+            
+        });
+        </script>
+        
+    </head>
+    <body>
+    <!-- 3. Add the container -->
+    <div id="container" style="width: 800px; height: 400px; margin: 0 auto"></div>
+    </body>
+</html>
